@@ -5,7 +5,7 @@ filetype off
 au BufWritePost ~/.vimrc so ~/.vimrc
 
 call plug#begin()
-Plug 'neomake/neomake'
+" Plug 'neomake/neomake'
 Plug 'pangloss/vim-javascript'
 Plug 'briancollins/vim-jst'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -17,6 +17,8 @@ Plug 'junegunn/limelight.vim'
 Plug 'reedes/vim-pencil'
 Plug 'mhartington/oceanic-next'
 Plug 'metakirby5/codi.vim'
+Plug 'wakatime/vim-wakatime'
+Plug 'w0rp/ale'
 
 Plug 'ternjs/tern_for_vim'
 Plug 'ervandew/supertab'
@@ -40,7 +42,7 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'mattn/emmet-vim'
 Plug 'Quramy/vim-js-pretty-template'
 Plug 'Quramy/tsuquyomi'
-Plug 'vim-syntastic/syntastic'
+" Plug 'vim-syntastic/syntastic'
 Plug 'junegunn/goyo.vim'
 Plug 'clausreinke/typescript-tools.vim'
 Plug 'Raimondi/delimitMate'
@@ -130,9 +132,9 @@ xnoremap <silent> g< <esc>:call <sid>search_store()<cr>gv:<C-B>silent <C-E>s/^\V
 
 
 " Neomake
-if has('nvim')
-call neomake#configure#automake('nw', 500)
-endif
+" if has('nvim')
+" call neomake#configure#automake('nw', 500)
+" endif
 
 inoremap <C-a> </<C-X><C-O>
 let g:enable_bold_font = 1
@@ -205,36 +207,9 @@ endfunction
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 nnoremap <Leader>r :Goyo<CR>
-" function! Goyo_before()
-" 	silent !tmux set status off
-" 	silent !tmux resize-pane -Z
-" 	set noshowmode
-" 	set noshowcmd
-" 	set wrap
-" 	set nolist
-" 	limelight
-" endfunction
-" function! Goyo_after()
-" 	silent !tmux set status on
-" 	silent !tmux resize-pane -Z
-" 	set showmode
-" 	set showcmd
-" 	set nowrap
-" 	limelight!
-" endfunction
-" 
-" let g:goyo_callbacks = [function('Goyo_before'), function('Goyo_after')]
-" 
-" graph
+
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
-
-set background=dark
-if &diff
-	colorscheme peaksea
-else
-	colorscheme OceanicNext
-endif
 
 set cursorline
 vnoremap < <gv
@@ -432,14 +407,14 @@ autocmd FileType typescript JsPreTmpl html
 autocmd FileType typescript syn clear foldBraces
 
 " Syntastic
-set statusline+=%#wariningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" set statusline+=%#wariningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" 
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
 
 let g:user_emmet_leader_key='<C-y>'
 let g:user_emmet_settings = {
@@ -555,6 +530,19 @@ function! LightLineFugitive()
 	endif
 	return ''
 endfunction
+
+" Linting
+let g:ale_linters = {
+\  'javascript.jsx': ['eslint'],
+\}
+
+let g:ale_fixers = {
+\  'javascript': ['eslint'],
+\}
+
+let g:ale_sign_error = '●'
+let g:ale_sign_warning = '.'
+let g:ale_lint_on_enter = 0
 
 " Codi
 let g:codi#interpreters = {
