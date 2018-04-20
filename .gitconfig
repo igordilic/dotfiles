@@ -1,10 +1,10 @@
 [user]
-	name = Igor Ilić
-	email = igor.ilic@evia.de
+	name = 
+	email = 
 [gitlab]
-  user = ilicigor@outlook.com
+  user = 
 [bitbucket]
-  user = ilicigor@gmail.com
+  user = 
 [color]
 	ui = true
 [merge]
